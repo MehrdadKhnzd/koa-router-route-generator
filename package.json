@@ -1,0 +1,12 @@
+{
+  "name": "koa-router-route-generator",
+  "version": "1.0.0",
+  "description": "Route generator and combiner for koa-router",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "repository": "https://github.com/MehrdadKhnzd/koa-router-route-generator.git",
+  "author": "Mehrdad Khanzadeh <mehrdadkhnzd@gmail.com>",
+  "license": "MIT"
+}
