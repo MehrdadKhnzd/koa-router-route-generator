@@ -39,3 +39,5 @@ const routeGenerator = (router, routeGroups) => {
     })
   });
 };
+
+module.exports = routeGenerator;
