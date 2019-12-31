@@ -7,6 +7,9 @@ A tiny utility for defining [koa-router](https://github.com/koajs/router) routes
 ```
 $ npm install koa-router-route-generator
 ```
+## Whats new in v2.0.0?
+
+Added nested route and route naming support. See below for more information.
 
 ## Usage
 
@@ -49,7 +52,24 @@ const dogRouter = {
 
 const catRouter = {
   get: {
-    '/cats': ctx => ctx.body = 'Cats!'
+    '/cats': {
+      name: 'cats',
+      handler: ctx => ctx.body = 'Cats!',
+      children: {
+        '/are-cute': [
+          ctx => ctx.state.cats = 'Cats!',
+          ctx => ctx.body = 'Cats are cute!'
+        ],
+        '/deeper': {
+          // The paths that doesn't have 'handler'
+          // will not be extracted as seperate routes!
+          name: 'deeper',
+          children: {
+            '/child': ctx => ctx.body = 'Deeper Childs!'
+          }
+        }
+      }
+    }
   }
 };
 
@@ -70,13 +90,21 @@ module.exports = router;
 | Param | Type | Description |
 | - | - | - |
 | method | `String` | Allowed method (get, post, etc.). |
-| route | `String` | Route path (all valid paths in [koa-router](https://github.com/koajs/router)). |
-| handler | `function` \| `function[]` | Route Middleware(s) |
+| path | `String` | Route path (all valid paths in [koa-router](https://github.com/koajs/router)). |
+| handler | `function` \| `function[]` | Route Middleware(s). |
+| name | `String?` | `name` parameter in [koa-router](https://github.com/koajs/router). |
+| children | `Route` | Route object as itself.
 
 ```javascript
 {
   method: {
     path: handler,
+    // or
+    objectPath: {
+      name: pathName,
+      hander: handler,
+      children: children
+    }
     // More paths here!
   },
   // More methods here!
