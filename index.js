@@ -21,13 +21,13 @@ const routeGenerator = (router, routeGroups) => {
         } else if (typeof routeGroup[method][route] === 'function') {
           router[method](route, routeGroup[method][route]);
         } else {
-          if (Array.isArray(routeGroup[method][route][handler]) && routeGroup[method][route][handler].length !== 0) {
+          if (Array.isArray(routeGroup[method][route].handler) && routeGroup[method][route].handler.length !== 0) {
             if (routeGroup[method][route][name]) {
               router[method](routeGroup[method][route][name], router, ...routeGroup[method][route])
             } else {
               router[method](router, ...routeGroup[method][route])
             }
-          } else if (typeof routeGroup[method][route][handler] === 'function') {
+          } else if (typeof routeGroup[method][route].handler === 'function') {
             if (routeGroup[method][route][name]) {
               router[method](routeGroup[method][route][name], router, routeGroup[method][route])
             } else {
