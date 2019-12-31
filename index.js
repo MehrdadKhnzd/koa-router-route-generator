@@ -16,22 +16,22 @@ const routeGenerator = (router, routeGroups) => {
     Object.keys(routeGroup).forEach(method => {
       const flattenedRoutes = routeFlattener(routeGroup[method]);
       Object.keys(flattenedRoutes).forEach(route => {
-        if (Array.isArray(routeGroup[method][route]) && routeGroup[method][route].length !== 0) {
-          router[method](route, ...routeGroup[method][route]);
-        } else if (typeof routeGroup[method][route] === 'function') {
-          router[method](route, routeGroup[method][route]);
+        if (Array.isArray(flattenedRoutes[route]) && flattenedRoutes[route].length !== 0) {
+          router[method](route, ...flattenedRoutes[route]);
+        } else if (typeof flattenedRoutes[route] === 'function') {
+          router[method](route, flattenedRoutes[route]);
         } else {
-          if (Array.isArray(routeGroup[method][route].handler) && routeGroup[method][route].handler.length !== 0) {
-            if (routeGroup[method][route][name]) {
-              router[method](routeGroup[method][route][name], router, ...routeGroup[method][route])
+          if (Array.isArray(flattenedRoutes[route].handler) && flattenedRoutes[route].handler.length !== 0) {
+            if (flattenedRoutes[route][name]) {
+              router[method](flattenedRoutes[route][name], router, ...flattenedRoutes[route])
             } else {
-              router[method](router, ...routeGroup[method][route])
+              router[method](router, ...flattenedRoutes[route])
             }
-          } else if (typeof routeGroup[method][route].handler === 'function') {
-            if (routeGroup[method][route][name]) {
-              router[method](routeGroup[method][route][name], router, routeGroup[method][route])
+          } else if (typeof flattenedRoutes[route].handler === 'function') {
+            if (flattenedRoutes[route][name]) {
+              router[method](flattenedRoutes[route][name], router, flattenedRoutes[route])
             } else {
-              router[method](router, routeGroup[method][route])
+              router[method](router, flattenedRoutes[route])
             }
           }
         }
